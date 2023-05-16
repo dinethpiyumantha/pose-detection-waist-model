@@ -1,21 +1,26 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 
 // Sample array of data
-const response = require("./response.json")
+const response = require("./response.json");
 
-app.get('/', (req, res) => {
-  res.send("Api Service")
-})
+// Root route
+router.get('/', (req, res) => {
+  res.send("Api Service");
+});
 
 // Route to respond with the JSON array
-app.post('/api/predict/keypoints', (req, res) => {
+router.post('/api/predict/keypoints', (req, res) => {
   res.status(200).send(response);
 });
 
-const port =  process.env.PORT || 9001;
+// Mount the router
+app.use('/', router);
+
+const port = process.env.PORT || 9001;
 
 // Start the server
 app.listen(port, () => {
-  console.log('Server is running on port '+port);
+  console.log('Server is running on port ' + port);
 });
